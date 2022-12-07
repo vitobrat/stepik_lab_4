@@ -24,7 +24,7 @@ string function1(){
     incorrect:
     cout << "Which type of input do you prefer?(1 - file; 2 - keyboard):";
     int input = checkInput();
-    string str;
+    string str = "";
     if (input == 1){
         ifstream File;
         File.open("C:\\FirstCursProgramm\\C++\\stepik_lab_4\\lab_4.txt");
@@ -36,6 +36,7 @@ string function1(){
             }
         } else{
             cout << "file could not be opened";
+            return "";
         }
         File.close();
     } else if (input == 2){
@@ -50,6 +51,37 @@ string function1(){
 //·удалить лишние знаки препинания (под «лишними» подразумевается несколько подряд идущих знаков;
 //·исправить регистр букв, если это требуется (пример некорректного использования регистра букв: пРиМЕр);
 string function2(string str){
+    string strRes = "";
+    cout << "String before editing:" << "\n" << str << "\n";
+    bool flag = true;
+    for (int i = 0; i <= str.length(); i++){
+        if (str[i] == ' '){
+            if (flag){
+                continue;
+            }else {
+                flag = true;
+                strRes+=str[i];
+            }
+        }else if(str[i]>='a' && str[i]<='z' || str[i]>='A' && str[i]<='Z'){
+            if (str[i]>='A' && str[i]<='Z' && !flag){
+                strRes+=str[i]+32;
+            }else{
+                strRes+=str[i];
+            }
+            flag = false;
+        }else{
+            flag = false;
+            if(str[i] == '.' && str[i+1] == '.' && str[i+2] == '.'){
+                i+=2;
+                strRes += "...";
+                continue;
+            }
+            if(str[i] != str[i-1]){
+                strRes += str[i];
+            }
+        }
+    }
+    cout << "String after editing:" << "\n" << strRes;
 
 }
 
