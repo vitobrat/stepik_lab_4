@@ -136,26 +136,24 @@ void function5(string str){
     for(int i = subString.length() - 1; i < str.length();){
         string str1 = "";
         bool flag = true;
-        if(subString.find(str[i]) != std::string::npos){
-            if (str[i] == subString[subString.length() - 1]){
-                for(int j = i; j > i - subString.length(); j--){
+        if(str[i] == subString[subString.length() - 1]){
+                for(int j = i; j > int(i - subString.length()); j--){
                     if(str[j] == subString[subString.length() - 1 - i + j]){
                         str1 = str[j] + str1;
                     }else{
                         flag = false;
-                        continue;
+                        i += subString.find(str[j]) != std::string::npos ? arr[subString.find_last_of(str[j])] - int(i - j) : subString.length() - int(i - j);
+                        break;
                     }
                 }
                 if(flag){
                     strRes = "exist";
                     count += 1;
+                    i += arr[subString.length() - 1];
                 }
-                i += arr[subString.length() - 1];
-            }else{
-                i += arr[subString.find_last_of(str[i])];
-            }
+
         }else{
-            i += subString.length();
+            i += subString.find(str[i]) != std::string::npos ? arr[subString.find_last_of(str[i])] : subString.length();
         }
     }
     end = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
