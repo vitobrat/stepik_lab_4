@@ -63,7 +63,7 @@ string function2(string str){
                 flag = true;
                 strRes+=str[i];
             }
-        }else if(str[i]>='a' && str[i]<='z' || str[i]>='A' && str[i]<='Z'){
+        }else if(str[i]>='a' && str[i]<='z' || str[i]>='A' && str[i]<='Z' || str[i]>='0' && str[i]<='9'){
             if (str[i]>='A' && str[i]<='Z' && !flag){
                 strRes+=str[i]+32;
             }else{
@@ -89,6 +89,60 @@ string function2(string str){
     return strRes;
 }
 
+//3.5. Вывести на экран только те слова последовательности, в которых первая буква слова встречается в этом слове еще раз.
+void function3(string str){
+    cout << "Word(s) in which the first letter consist in word:";
+    bool flagSpace = false, flag = false;
+    char first;
+    string str1 = "";
+    for (int i = 0; i < str.length(); i++){
+        if (str[i] == ' '){
+            if (flag){
+                cout << str1 << " ";
+            }
+            flagSpace = true;
+            flag = false;
+            str1 = "";
+        }else{
+            if (flagSpace){
+                flagSpace = false;
+                str1 += str[i];
+                first = str[i];
+                continue;
+            }
+            if (first == str[i]){
+                flag = true;
+            }
+            str1 += str[i];
+        }
+    }
+}
+
+//4.5. Вывести на экран ту же последовательность, переместив все цифры, содержащиеся в словах, в конец соответствующих слов.
+void functio4(string str){
+    cout << "String after exercise 4.5: " << "\n";
+    string str1 = "";
+    bool flag = true;
+    for (int i = 0; i < str.length(); i++){
+        if (str[i]>='0' && str[i]<='9'){
+            str1 += str[i];
+            str.erase(i,1);
+            flag = true;
+            if (str[i]>='0' && str[i]<='9'){
+                i--;
+            }
+        }else if ((str[i] == ' ' || !(str[i]>='a' && str[i]<='z' || str[i]>='A' && str[i]<='Z')) && flag){
+            str.insert(i, str1);
+            i += str1.length() - 1;
+            str1 = "";
+            flag = false;
+        }
+    }
+    cout << str;
+}
+
+//5. Необходимо найти все подстроки, которую введёт пользователь в имеющейся строке. Реализуйте два алгоритма:
+// первый алгоритма – Линейный поиск, а второй – Бойера-Мура.
 void function5(string str){
     string subString = "", strRes = "not exist";
     int count = 0;
@@ -160,9 +214,18 @@ void function5(string str){
     cout << "SubString - " << strRes << "; There is(are) " << count << " substring(s);" << "Spent time: " << end - start << "ns\n";
 }
 
+void writeFile(string str){
+    fstream File ( "C:\\FirstCursProgramm\\C++\\stepik_lab_4\\lab_4_res.txt", ios :: out | ios :: trunc );
+    if(File.is_open()){
+        File << str;
+    }else{
+        cout << "file could not be opened";
+    }
+}
+
 int main() {
     string str;
-    //1.С клавиатуры или с файла (*) (пользователь сам может выбрать способ ввода) вводится последовательность,
+    //1. С клавиатуры или с файла (*) (пользователь сам может выбрать способ ввода) вводится последовательность,
     // содержащая от 1 до 50 слов, в каждом из которых от 1 до 10 строчных латинских букв и цифр.
     // Между соседними словами произвольное количество пробелов. За последним символом стоит точка.
     str = function1();
@@ -172,11 +235,16 @@ int main() {
     //·исправить регистр букв, если это требуется (пример некорректного использования регистра букв: пРиМЕр);
     str = function2(str);
     cout << "\n";
-    //3.
-
-    //4.
-
-    //5.
+    //5. Необходимо найти все подстроки, которую введёт пользователь в имеющейся строке. Реализуйте два алгоритма:
+    // первый алгоритма – Линейный поиск, а второй – Бойера-Мура.
     function5(str);
+    cout << "\n";
+    //3.5. Вывести на экран только те слова последовательности, в которых первая буква слова встречается в этом слове еще раз.
+    function3(str);
+    cout << "\n";
+    //4.5. Вывести на экран ту же последовательность, переместив все цифры, содержащиеся в словах, в конец соответствующих слов.
+    functio4(str);
+    // Записать полученную строку в файл
+    writeFile(str);
     return 0;
 }
