@@ -11,14 +11,14 @@ int checkInput(){
         if (cin.fail()) {
             throw 1;
         }
-    } catch (int exeption) {
+    } catch (int exception) {
         cout << "ERROR!!!";
         exit(0);
     }
     cin.sync();
     return input;
 }
-//1.С клавиатуры или с файла (*) (пользователь сам может выбрать способ ввода) вводится последовательность,
+//1. С клавиатуры или с файла (*) (пользователь сам может выбрать способ ввода) вводится последовательность,
 // содержащая от 1 до 50 слов, в каждом из которых от 1 до 10 строчных латинских букв и цифр.
 // Между соседними словами произвольное количество пробелов. За последним символом стоит точка.
 string function1(){
@@ -146,6 +146,7 @@ void function4(string str){
 void function5(string str){
     string subString = "", strRes = "not exist";
     int count = 0;
+    int index =0;
     cout << "Input the substring you want to find in the string:";
     getline(cin, subString);
     cout << "Linear search:" << "\n";
@@ -161,6 +162,7 @@ void function5(string str){
             }
         }
         if (subString == str1){
+            cout << i + 1 << " ";
             strRes = "exist";
             count += 1;
         }
@@ -203,6 +205,7 @@ void function5(string str){
                 }
                 if(flag){
                     strRes = "exist";
+                    cout << i + 1 - (subString.length() - 1) << " ";
                     count += 1;
                     i += arr[subString.length() - 1];
                 }
